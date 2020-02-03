@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service              # 1
+metadata:
+  name: python-hello-web-bar
+  namespace: my-app
+spec:
+  type: NodePort       # 2
+  ports:
+  - port: 5000               # 3
+    protocol: TCP          # 4
+    targetPort: 5000         # 5
+  selector:                # 6
+    app: python-hello-web-bar       # 7
+

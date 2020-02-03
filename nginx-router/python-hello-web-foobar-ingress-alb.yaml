@@ -1,0 +1,48 @@
+#apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: my-ingress
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /$1
+#spec:
+#  backend:
+#    serviceName: other
+#    servicePort: 8080
+#  rules:
+#  - host: foo.mydomain.com
+#    http:
+#      paths:
+#      - backend:
+#          serviceName: python-hello-web-foo
+#          servicePort: 5000
+#  - host: mydomain.com
+#    http:
+#      paths:
+#      - path: /bar/(.*)
+#        backend:
+#          serviceName: python-hello-web-bar
+#          servicePort: 5000
+#      - path: /bar2/(.*)
+#        backend:
+#          serviceName: python-hello-web-bar-v2
+#          servicePort: 5000
+#---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "my-alb-ingress-bla"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  labels:
+    app: python-hello-web-foo
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: "python-hello-web-foo"
+              servicePort: 5000
+

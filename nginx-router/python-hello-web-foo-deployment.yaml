@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment                                          # 1
+metadata:
+  name: python-hello-web-foo
+spec:
+  replicas: 2                                             # 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate                                   # 3
+    rollingUpdate: 
+      maxUnavailable: 1                                   # 4
+      maxSurge: 1                                         # 5
+  template:
+    metadata:
+      labels:
+        app: python-hello-web-foo                                  # 6
+        version: v1
+    spec:
+      containers:
+        - image: haalcala/python-hello-web-foo-v1
+          imagePullPolicy: Always                         # 7
+          name: python-hello-web-foo
+          ports:
+            - containerPort: 5000
+

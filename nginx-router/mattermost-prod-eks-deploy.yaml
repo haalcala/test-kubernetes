@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment                                          # 1
+metadata:
+  name: mattermost-prod
+spec:
+  replicas: 1                                             # 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate                                   # 3
+    rollingUpdate: 
+      maxUnavailable: 1                                   # 4
+      maxSurge: 1                                         # 5
+  template:
+    metadata:
+      labels:
+        app: mattermost-prod                                  # 6
+        version: v1
+    spec:
+      containers:
+        - image: haalcala/mattermost-prod
+          imagePullPolicy: Always                         # 7
+          name: mattermost-prod
+          ports:
+            - containerPort: 8065
+          env:
+            - name: __DB_HOST__
+              value: mattermost-prod.cabldmnc4rgm.us-east-2.rds.amazonaws.com
+

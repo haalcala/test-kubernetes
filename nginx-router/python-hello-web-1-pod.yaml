@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod                                            # 1
+metadata:
+  name: python-hello-web
+  labels:
+    app: python-hello-web                            # 2
+spec:                                                # 3
+  containers:
+    - image: haalcala/python-hello-web-v3               # 4
+      name: python-hello-web                              # 5
+      ports:
+        - containerPort: 5000                          # 6
+
+
