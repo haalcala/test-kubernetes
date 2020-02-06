@@ -260,7 +260,7 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "HTTPS"
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/group: python-hello-web-nginx-svc
     alb.ingress.kubernetes.io/certificate-arn: AAA
   labels:
