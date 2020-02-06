@@ -250,6 +250,9 @@ spec:
     app: python-hello-web-nginx
 
 ---
+# See the following link the steps
+# SSL Terminated ALB :  https://medium.com/faun/aws-eks-and-tls-terminated-load-balancer-18c152536f33
+# Enable ALB on EKS : https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html#w243aac23b7c19b2b3b3
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
