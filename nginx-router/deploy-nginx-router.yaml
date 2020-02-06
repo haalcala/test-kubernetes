@@ -244,10 +244,11 @@ kind: Service
 metadata:
   name: python-hello-web-nginx-svc
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
-  - port: 80
-    targetPort: 80
+    - port: 443
+      targetPort: 80
+      protocol: TCP
   selector:
     app: python-hello-web-nginx
 
@@ -260,21 +261,23 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "HTTPS"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/group: python-hello-web-nginx-svc
+    alb.ingress.kubernetes.io/certificate-arn: AAA
   labels:
-      app: python-hello-web-nginx-svc
+    app: python-hello-web-nginx-svc
 spec:
   rules:
     - http:
         paths:
-        - path: /*
-          backend:
-            serviceName: "python-hello-web-nginx-svc"
-            servicePort: 80
+          - path: /*
+            backend:
+              serviceName: "python-hello-web-nginx-svc"
+              servicePort: 443
 
 ---
-
 # Application Load Balancer (ALB) Ingress Controller Deployment Manifest.
 # This manifest details sensible defaults for deploying an ALB Ingress Controller.
 # GitHub: https://github.com/kubernetes-sigs/aws-alb-ingress-controller
