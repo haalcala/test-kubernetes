@@ -1,7 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment                                          # 1
 metadata:
-  name: mattermost-prod
+  name: python-hello-web-foo
+  version: v1
 spec:
   replicas: 1                                             # 2
   minReadySeconds: 15
@@ -13,16 +14,17 @@ spec:
   template:
     metadata:
       labels:
-        app: mattermost-prod                                  # 6
+        app: python-hello-web-foo                                  # 6
         version: v1
     spec:
       containers:
         - image: haalcala/mattermost-prod
           imagePullPolicy: Always                         # 7
-          name: mattermost-prod
+          name: python-hello-web-foo
           ports:
             - containerPort: 8065
           env:
             - name: __DB_HOST__
-              value: mattermost-prod.cabldmnc4rgm.us-east-2.rds.amazonaws.com
+              value: mattermost-prod-test.cabldmnc4rgm.us-east-2.rds.amazonaws.com
+
 
