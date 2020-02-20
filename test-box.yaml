@@ -1,0 +1,29 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+    name: test-box
+spec:
+    selector:
+        matchLabels:
+            app: test-box
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                app: test-box
+        spec:
+            containers:
+                - image: haalcala/mm-init-container
+                  name: test-box
+                  command:
+                      - bash
+                      - "-c"
+                      - |
+                          set -x
+
+                          apt update
+
+                          apt install -y iputils-ping
+
+                          sleep 999999
